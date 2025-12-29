@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gaviota — Agence de développement web & mobile</title>
+    <meta
+      name="description"
+      content="Gaviota imagine et réalise des plateformes web, applications métier et apps mobiles pour TotalEnergies, Airbus, Thales, Alstom et les scale-ups ambitieuses."
+    />
+    <meta
+      name="keywords"
+      content="Gaviota, agence web, développement web, applications mobiles, Next.js, TypeScript, Tailwind, plateformes SaaS, MVP, agence Paris"
+    />
+    <meta name="author" content="Gaviota - Jérôme Le Champion" />
+    <meta property="og:title" content="Gaviota — Agence de développement web & mobile" />
+    <meta
+      property="og:description"
+      content="Studio produit basé à Paris, Gaviota construit des plateformes web, applications métier et apps mobiles pour TotalEnergies, Airbus, Thales, Alstom et les scale-ups ambitieuses."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://gaviota.fr/" />
+    <meta property="og:image" content="https://gaviota.fr/assets/images/logo.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Gaviota — Agence de développement web & mobile" />
+    <meta
+      name="twitter:description"
+      content="Sites web, plateformes métier et applications mobiles conçus et développés par Gaviota."
+    />
+    <meta name="twitter:image" content="https://gaviota.fr/assets/images/logo.png" />
+    <meta name="theme-color" content="#05060a" />
+    <link rel="canonical" href="https://gaviota.fr/" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/logo.png" />
+    <link rel="apple-touch-icon" href="./assets/images/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header" id="accueil">
+      <div class="container header__inner">
+        <a href="#accueil" class="brand" aria-label="Gaviota">
+          <img src="./assets/images/logo.png" alt="Gaviota" />
+        </a>
+        <nav class="site-nav" aria-label="Navigation principale">
+          <a href="#services">Expertises</a>
+          <a href="#solutions">Solutions</a>
+          <a href="#projets">Projets</a>
+          <a href="#clients">Clients</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <button class="theme-toggle" type="button" aria-label="Changer de thème">
+          <span class="theme-toggle__icon">🌙</span>
+        </button>
+        <a class="btn btn--ghost header__cta" href="#contact"
+          >Parlons de votre produit</a
+        >
+        <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero__grid">
+          <div class="hero__content">
+            <p class="eyebrow">Notre ambition</p>
+            <h1>
+              Nous construisons des expériences web et mobiles sur lesquelles les grands groupes
+              s'appuient au quotidien.
+            </h1>
+            <p class="lead">
+              Équipe parisienne indépendante, Gaviota accompagne les directions digitales de
+              TotalEnergies, Alstom, Airbus, Thales et les scale-ups exigeantes – de l'idéation au
+              déploiement international.
+            </p>
+            <div class="hero__actions">
+              <a class="btn btn--primary" href="#contact">Planifier un call</a>
+              <a class="btn btn--link" href="#services">Voir nos expertises</a>
+            </div>
+            <div class="hero__stats">
+              <div class="stat">
+                <span>20+</span>
+                <p>Plateformes et apps lancées</p>
+              </div>
+              <div class="stat">
+                <span>99%</span>
+                <p>Satisfaction des comités projets</p>
+              </div>
+              <div class="stat">
+                <span>45 jours</span>
+                <p>Pour passer de l'idée au MVP</p>
+              </div>
+            </div>
+          </div>
+          <div class="hero__visual">
+            <div class="hero__glass">
+              <img
+                src="./assets/images/hero-illustration.png"
+                alt="Interface web et mobile Gaviota"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="container client-strip" aria-label="Clients majeurs">
+          <div class="client-strip__copy">
+            <p>Ils nous confient leurs produits critiques</p>
+            <small>Programmes spatiaux, signalisation ferroviaire, plateformes IoT</small>
+          </div>
+          <ul class="logo-row">
+            <li>
+              <img src="./assets/logos/airbus.png" alt="Airbus" />
+            </li>
+            <li>
+              <img src="./assets/logos/thales.png" alt="Thales" />
+            </li>
+            <li>
+              <img src="./assets/logos/alstom.png" alt="Alstom" />
+            </li>
+            <li>
+              <img src="./assets/logos/totalenergies.png" alt="TotalEnergies" />
+            </li>
+            <li>
+              <img src="./assets/logos/swap_gps.png" alt="SWAP GPS" />
+            </li>
+            <li>
+              <img src="./assets/logos/STMicroelectronics.png" alt="STMicroelectronics" />
+            </li>
+            <li>
+              <img src="./assets/logos/arc_piglet_nutrition_logo.jpeg" alt="ARC Piglet Nutrition" />
+            </li>
+            <li>
+              <img src="./assets/logos/TUORIGEN.png" alt="Tuorigen" />
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="services" id="services">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow">Expertises intégrées</p>
+            <h2>Un studio produit qui parle métier, data et sécurité.</h2>
+            <p>
+              Conception, développement et déploiement : nos squads combinent product owners,
+              designers seniors et ingénieurs full-stack pour aller vite sans renier la qualité.
+            </p>
+          </div>
+          <div class="service-grid">
+            <article class="card">
+              <img src="./assets/images/icon-1.png" alt="Icône web" />
+              <h3>Sites corporate & plateformes web</h3>
+              <p>
+                Expériences responsives haute performance bâties sur des stacks modernes (Next.js,
+                TypeScript, Tailwind) avec des CMS headless sécurisés.
+              </p>
+              <ul>
+                <li>Design system sur-mesure</li>
+                <li>SEO technique & accessibilité</li>
+                <li>Monitoring et support 24/7</li>
+              </ul>
+            </article>
+            <article class="card">
+              <img src="./assets/images/icon-3.png" alt="Icône produit" />
+              <h3>Applications web métier</h3>
+              <p>
+                Back-offices, portails clients, configurateurs complexes et dashboards data pensés
+                pour des usages sensibles et multi-pays.
+              </p>
+              <ul>
+                <li>Architecture cloud & API first</li>
+                <li>Sécurité auditée (OWASP, IAM)</li>
+                <li>Scalabilité et reprise sur incident</li>
+              </ul>
+            </article>
+            <article class="card">
+              <img src="./assets/images/icon-4.png" alt="Icône mobile" />
+              <h3>Applications mobiles & field services</h3>
+              <p>
+                Applications iOS/Android natives ou hybrides pour équipes terrain, forces de vente et
+                expériences B2C synchronisées.
+              </p>
+              <ul>
+                <li>UX mobile-first testée sur le terrain</li>
+                <li>Intégration MDM et SSO</li>
+                <li>Maintenance évolutive continue</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="solutions" id="solutions">
+        <div class="container solutions__grid">
+          <div class="solutions__content">
+            <p class="eyebrow">Solutions clé en main</p>
+            <h2>Des équipes produit complètes, guidées par l'impact métier.</h2>
+            <p>
+              Nous déployons les mêmes standards industriels que ceux demandés par Airbus ou Thales :
+              revue de code systématique, CI/CD sécurisé, monitoring proactif et documentation
+              exhaustive.
+            </p>
+            <div class="pill-list">
+              <span>Audit & stratégie produit</span>
+              <span>Discovery UX/UI</span>
+              <span>Industrialisation DevOps</span>
+              <span>Accompagnement au run</span>
+            </div>
+            <div class="checklist">
+              <div>
+                <strong>Squads autonomes</strong>
+                <p>PO, design lead et ingénieurs seniors qui livrent toutes les deux semaines.</p>
+              </div>
+              <div>
+                <strong>Gouvernance claire</strong>
+                <p>Comité hebdo, indicateurs partagés et feuilles de route visuelles.</p>
+              </div>
+              <div>
+                <strong>Qualité mesurable</strong>
+                <p>Tests automatisés, revues de sécurité et conventions de code documentées.</p>
+              </div>
+            </div>
+          </div>
+          <div class="solutions__visual">
+            <img src="./assets/images/feature.png" alt="Équipe produit Gaviota" />
+          </div>
+        </div>
+      </section>
+
+      <section class="case-studies" id="projets">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow">Cas clients</p>
+            <h2>Nous propulsons la transformation digitale des leaders industriels.</h2>
+            <p>
+              Chaque projet est mené par une task-force dédiée qui assure cadrage, delivery et
+              transfert de compétences vers vos équipes internes.
+            </p>
+          </div>
+          <div class="case-grid">
+            <article class="case-card">
+              <div class="case-card__top">
+                <div class="case-card__brand">
+                  <img
+                    src="./assets/logos/airbus.png"
+                    alt="Airbus Defence & Space"
+                    class="case-card__logo"
+                  />
+                  <div>
+                    <h3>Airbus Defence & Space</h3>
+                    <p class="case-card__subtitle">Programme Ariane 6</p>
+                  </div>
+                </div>
+                <span class="tag">Mission critical</span>
+              </div>
+              <p>
+                Conception d'un outil interne qui vérifie la cohérence entre les diagrammes UML du
+                programme de vol Ariane 6 et le code Ada 2012 qui pilote la fusée — pierre angulaire
+                du process de certification.
+              </p>
+              <ul>
+                <li>Contrôles automatiques UML ↔ Ada avec traçabilité</li>
+                <li>Rapports d'audit générés pour les équipes safety & qualité</li>
+                <li>Gain de temps significatif lors des revues CNES / ESA</li>
+              </ul>
+            </article>
+            <article class="case-card">
+              <div class="case-card__top">
+                <div class="case-card__brand">
+                  <img
+                    src="./assets/logos/totalenergies.png"
+                    alt="TotalEnergies"
+                    class="case-card__logo"
+                  />
+                  <div>
+                    <h3>TotalEnergies Lubrifiants</h3>
+                    <p class="case-card__subtitle">Plateforme IoT</p>
+                  </div>
+                </div>
+                <span class="tag">PWA industrielle</span>
+              </div>
+              <p>
+                Application web progressive qui centralise les données capteurs des usines, permet aux
+                équipes de configurer des alertes et d'agir sur la qualité des lubrifiants en temps
+                réel.
+              </p>
+              <ul>
+                <li>Front-end Next.js / Material UI calibré pour les grands comptes</li>
+                <li>Back-end Node.js + Prisma/GraphQL orchestrant la donnée capteur</li>
+                <li>PWA offline-first, tests Jest et monitoring 24/7</li>
+              </ul>
+            </article>
+            <article class="case-card">
+              <div class="case-card__top">
+                <div class="case-card__brand">
+                  <img src="./assets/logos/thales.png" alt="Thales" class="case-card__logo" />
+                  <div>
+                    <h3>Thales Air Systems</h3>
+                    <p class="case-card__subtitle">Radar Sea Fire 500</p>
+                  </div>
+                </div>
+                <span class="tag">Logiciel embarqué</span>
+              </div>
+              <p>
+                Développement du logiciel embarqué du radar tridimensionnel à balayage électronique
+                Sea Fire 500, destiné aux frégates de nouvelle génération.
+              </p>
+              <ul>
+                <li>Code temps réel durci pour environnements navals</li>
+                <li>Chaîne de chiffrement et diagnostics embarqués</li>
+                <li>Qualification avec les équipes systèmes & cybersécurité</li>
+              </ul>
+            </article>
+            <article class="case-card">
+              <div class="case-card__top">
+                <div class="case-card__brand">
+                  <img src="./assets/logos/alstom.png" alt="Alstom" class="case-card__logo" />
+                  <div>
+                    <h3>Alstom Transport</h3>
+                    <p class="case-card__subtitle">Signalisation Urbalis Fluence</p>
+                  </div>
+                </div>
+                <span class="tag">Rail & mobilité</span>
+              </div>
+              <p>
+                Industrialisation de la validation logicielle pour Urbalis Fluence : outil d'automatisation
+                de tests unitaires et accompagnement sur la documentation de sûreté logiciel.
+              </p>
+              <ul>
+                <li>Moteur de tests Java relié aux bancs temps réel</li>
+                <li>Validation et développement Ada sur la chaîne CBTC</li>
+                <li>Spécifications et revues pour les autorités de sécurité</li>
+              </ul>
+            </article>
+            <article class="case-card">
+              <div class="case-card__top">
+                <div class="case-card__brand">
+                  <img src="./assets/logos/swap_gps.png" alt="SWAP GPS" class="case-card__logo" />
+                  <div>
+                    <h3>SWAP GPS</h3>
+                    <p class="case-card__subtitle">Plateforme hardware + SaaS</p>
+                  </div>
+                </div>
+                <span class="tag">IoT & mobile</span>
+              </div>
+              <p>
+                Conception de bout en bout d'une plateforme connectée : protocoles embarqués,
+                traitement de géolocalisation temps réel et applications mobiles/web pour suivre des
+                flottes d'objets partout dans le monde.
+              </p>
+              <ul>
+                <li>Choix techniques, roadmap et coordination des prestataires</li>
+                <li>Applications Android, iOS et web synchronisées via API sécurisée</li>
+                <li>Chiffrement des données, alertes sur mesure et supervision 24/7</li>
+              </ul>
+            </article>
+            <article class="case-card">
+              <div class="case-card__top">
+                <div class="case-card__brand">
+                  <img src="./assets/logos/STMicroelectronics.png" alt="STMicroelectronics" class="case-card__logo" />
+                  <div>
+                    <h3>STMicroelectronics</h3>
+                    <p class="case-card__subtitle">Coaching industrialisation</p>
+                  </div>
+                </div>
+                <span class="tag">Industrie</span>
+              </div>
+              <p>
+                Création de procédures de travail et de spécifications opérationnelles pour accélérer
+                la montée en compétence des opérateurs et fiabiliser la production.
+              </p>
+              <ul>
+                <li>Standardisation des modes opératoires</li>
+                <li>Documentation claire pour les équipes terrain</li>
+                <li>Support aux équipes qualité</li>
+              </ul>
+            </article>
+            <article class="case-card">
+              <div class="case-card__top">
+                <div class="case-card__brand">
+                  <img src="./assets/logos/arc_piglet_nutrition_logo.jpeg" alt="ARC Piglet Nutrition" class="case-card__logo" />
+                  <div>
+                    <h3>ARC Piglet Nutrition</h3>
+                    <p class="case-card__subtitle">Optimisation ERP</p>
+                  </div>
+                </div>
+                <span class="tag">Data & ERP</span>
+              </div>
+              <p>
+                Développement de requêtes et automatisations SQL au-dessus de SAP Business One, Coresuite
+                et Access pour fiabiliser la prise de décision logistique.
+              </p>
+              <ul>
+                <li>Scripts SQL sur SAP B1 / Coresuite</li>
+                <li>Automatisation des rapports</li>
+                <li>Nettoyage et normalisation de données</li>
+              </ul>
+            </article>
+            <article class="case-card">
+              <div class="case-card__top">
+                <div class="case-card__brand">
+                  <img src="./assets/logos/TUORIGEN.png" alt="Tuorigen" class="case-card__logo" />
+                  <div>
+                    <h3>Tuorigen</h3>
+                    <p class="case-card__subtitle">SEO & performance</p>
+                  </div>
+                </div>
+                <span class="tag">Digital marketing</span>
+              </div>
+              <p>
+                Mise en place et optimisation du référencement naturel du site web, accompagnée d'ajustements
+                d'hébergement pour sécuriser vitesse d'affichage et uptime.
+              </p>
+              <ul>
+                <li>Audit SEO complet et plan d'action</li>
+                <li>Optimisations techniques et contenus</li>
+                <li>Amélioration des performances d'hébergement</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="clients" id="clients">
+        <div class="container clients__grid">
+          <div class="clients__content">
+            <p class="eyebrow">Relations de confiance</p>
+            <h2>Des comités projets sereins, un pilotage transparent.</h2>
+            <p>
+              Nous parlons la langue des DSI comme des directions marketing. Les sponsors disposent en
+              temps réel de l'avancement, des risques et des arbitrages budgétaires.
+            </p>
+            <div class="testimonial">
+              <p>
+                « Jérôme a su inventer et réaliser l'ensemble des composantes techniques du projet
+                SWAP avec inventivité, rigueur et rapidité. »
+              </p>
+              <span>Guillaume Eberwein — PDG de SWAP</span>
+            </div>
+            <div class="testimonial">
+              <p>
+                « Top collaborateur ! En tout point de vue :) »
+              </p>
+              <span>Marianne Cros — Key Account Manager, Nexton</span>
+            </div>
+            <div class="testimonial">
+              <p>
+                « Jérôme a su répondre à nos besoins très spécifiques avec une qualité d'exécution
+                irréprochable. »
+              </p>
+              <span>Stéphane Seguin — Directeur de programme</span>
+            </div>
+          </div>
+          <div class="clients__visual">
+            <img src="./assets/images/team.png" alt="Équipe projet Gaviota" />
+            <div class="clients__stats">
+              <div>
+                <span>De nombreux</span>
+                <p>experts en interne</p>
+              </div>
+              <div>
+                <span>4.9/5</span>
+                <p>Score moyen post-projet</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="process">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow">Méthode éprouvée</p>
+            <h2>Nous cadrons, construisons et faisons grandir vos produits digitaux.</h2>
+          </div>
+          <div class="process__steps">
+            <article>
+              <span>01</span>
+              <h3>Immersion & blueprint</h3>
+              <p>
+                Ateliers métiers, cartographie applicative et priorisation par impact pour sécuriser le
+                budget et les KPI dès la première semaine.
+              </p>
+            </article>
+            <article>
+              <span>02</span>
+              <h3>Delivery incrémental</h3>
+              <p>
+                Design sprint, développement full-stack, QA automatisée et démonstrations live à chaque
+                itération.
+              </p>
+            </article>
+            <article>
+              <span>03</span>
+              <h3>Run & accélération</h3>
+              <p>
+                Monitoring proactif, support 24/7, coaching des équipes internes et plan d'évolution
+                aligné sur vos ambitions.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta" id="contact">
+        <div class="container cta__grid">
+          <div>
+            <p class="eyebrow">Travaillons ensemble</p>
+            <h2>Parlons de vos enjeux digitaux.</h2>
+            <p>
+              Expliquez-nous votre contexte : nous revenons sous 48h avec une proposition de parcours
+              (audit flash, discovery, squad dédiée…).
+            </p>
+            <ul class="cta__bullets">
+              <li>Equipe projet dédiée en moins de 10 jours</li>
+              <li>Production en France, NDA systématique</li>
+              <li>Références vérifiables auprès de nos clients</li>
+            </ul>
+          </div>
+          <form class="contact-form">
+            <label>
+              <span>Nom & entreprise</span>
+              <input type="text" name="name" placeholder="Camille, Airbus" required />
+            </label>
+            <label>
+              <span>Email professionnel</span>
+              <input type="email" name="email" placeholder="prenom@entreprise.com" required />
+            </label>
+            <label>
+              <span>Projet</span>
+              <textarea name="message" rows="4" placeholder="Décrivez vos enjeux"></textarea>
+            </label>
+            <button type="submit" class="btn btn--primary">Envoyer</button>
+            <p class="form-footnote">
+              En soumettant ce formulaire, vous acceptez que Gaviota vous contacte au sujet de votre
+              projet. Aucune prospection non sollicitée.
+            </p>
+            <p class="form-status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer__grid">
+        <div>
+          <img src="./assets/images/logo.png" alt="Gaviota" />
+          <p>
+            Gaviota — studio de développement web et mobile basé à Paris. Nous construisons les
+            produits digitaux des leaders européens.
+          </p>
+        </div>
+        <div>
+          <p class="eyebrow">Contact</p>
+          <a href="tel:+33620346064">06 20 34 60 64</a>
+          <a href="mailto:jerome.le.champion@gmail.com">jerome.le.champion@gmail.com</a>
+          <p>Boulogne-Billancourt</p>
+        </div>
+        <div>
+          <p class="eyebrow">Suivez-nous</p>
+          <div class="socials">
+            <a href="https://www.linkedin.com/in/j-lc/" aria-label="LinkedIn" target="_blank"
+              ><img src="./assets/logos/linkedin.png" alt="LinkedIn"
+            /></a>
+            <a href="https://github.com/jerome-lechampion/" aria-label="GitHub" target="_blank">
+              <span class="social-pill">
+                <img
+                  src="./assets/logos/github.png"
+                  alt="GitHub"
+                />
+              </span>
+            </a>
+            <a href="https://www.malt.fr/profile/jeromelechampion" aria-label="Malt" target="_blank"
+              ><img src="./assets/logos/malt.png" alt="Malt"
+            /></a>
+          </div>
+        </div>
+      </div>
+      <div class="container footer__bottom">
+        <small>© <span id="year"></span> Gaviota. Tous droits réservés.</small>
+        <a href="#accueil">Remonter</a>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
