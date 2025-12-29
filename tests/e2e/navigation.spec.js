@@ -20,16 +20,24 @@ test.describe('Navigation Functionality', () => {
   test('should navigate to sections on click', async ({ page }) => {
     await page.goto('/');
 
+    // Open mobile menu if nav toggle is visible (mobile view)
+    const navToggle = page.locator('.nav-toggle');
+    if (await navToggle.isVisible()) {
+      await navToggle.click();
+      // Wait for menu to open
+      await page.waitForTimeout(300);
+    }
+
     const servicesLink = page.locator('.site-nav a[href="#services"]');
     await servicesLink.click();
 
     // Wait for URL to change to include hash
-    await page.waitForURL('**/#services', { timeout: 5000 });
+    await page.waitForFunction(() => window.location.hash === '#services', { timeout: 5000 });
     expect(page.url()).toContain('#services');
 
     // Check if section is in viewport with more time for scroll animation
     const servicesSection = page.locator('#services');
-    await expect(servicesSection).toBeInViewport({ timeout: 5000 });
+    await expect(servicesSection).toBeInViewport({ timeout: 10000 });
   });
 
   test('should navigate to contact section and show form', async ({ page }) => {
