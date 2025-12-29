@@ -1,5 +1,5 @@
 import { chromium } from '@playwright/test';
-import { injectAxe, checkA11y } from '@axe-core/playwright';
+import AxeBuilder from '@axe-core/playwright';
 
 async function runAccessibilityTests() {
   console.log('Starting accessibility tests...\n');
@@ -11,65 +11,54 @@ async function runAccessibilityTests() {
   const violations = [];
 
   try {
-    // Start local server or use deployed URL
-    await page.goto('http://localhost:8080');
-
-    // Inject Axe
-    await injectAxe(page);
-
+    // Test Homepage (dark theme)
     console.log('Testing: Homepage (dark theme)');
-    await checkA11y(page, null, {
-      detailedReport: true,
-      detailedReportOptions: { html: true }
-    }, (results) => {
-      if (results.violations.length > 0) {
-        violations.push({ page: 'Homepage (dark)', violations: results.violations });
-      }
-    });
+    await page.goto('http://localhost:8080');
+    const darkResults = await new AxeBuilder({ page }).analyze();
+    if (darkResults.violations.length > 0) {
+      violations.push({ page: 'Homepage (dark)', violations: darkResults.violations });
+    }
 
     // Test light theme
     console.log('Testing: Homepage (light theme)');
     await page.evaluate(() => {
       document.documentElement.dataset.theme = 'light';
     });
-    await checkA11y(page, null, {}, (results) => {
-      if (results.violations.length > 0) {
-        violations.push({ page: 'Homepage (light)', violations: results.violations });
-      }
-    });
+    const lightResults = await new AxeBuilder({ page }).analyze();
+    if (lightResults.violations.length > 0) {
+      violations.push({ page: 'Homepage (light)', violations: lightResults.violations });
+    }
 
     // Test contact form
     console.log('Testing: Contact form section');
     await page.goto('http://localhost:8080/#contact');
     await page.waitForTimeout(500);
-    await injectAxe(page);
-    await checkA11y(page, '.contact-form', {}, (results) => {
-      if (results.violations.length > 0) {
-        violations.push({ page: 'Contact Form', violations: results.violations });
-      }
-    });
+    const formResults = await new AxeBuilder({ page })
+      .include('.contact-form')
+      .analyze();
+    if (formResults.violations.length > 0) {
+      violations.push({ page: 'Contact Form', violations: formResults.violations });
+    }
 
     // Test navigation
     console.log('Testing: Navigation menu');
     await page.goto('http://localhost:8080');
-    await injectAxe(page);
-    await checkA11y(page, '.site-nav', {}, (results) => {
-      if (results.violations.length > 0) {
-        violations.push({ page: 'Navigation', violations: results.violations });
-      }
-    });
+    const navResults = await new AxeBuilder({ page })
+      .include('.site-nav')
+      .analyze();
+    if (navResults.violations.length > 0) {
+      violations.push({ page: 'Navigation', violations: navResults.violations });
+    }
 
     // Test mobile menu
     console.log('Testing: Mobile navigation');
     await page.setViewportSize({ width: 375, height: 667 });
     await page.reload();
-    await injectAxe(page);
     await page.click('.nav-toggle');
-    await checkA11y(page, null, {}, (results) => {
-      if (results.violations.length > 0) {
-        violations.push({ page: 'Mobile Navigation', violations: results.violations });
-      }
-    });
+    const mobileResults = await new AxeBuilder({ page }).analyze();
+    if (mobileResults.violations.length > 0) {
+      violations.push({ page: 'Mobile Navigation', violations: mobileResults.violations });
+    }
 
   } catch (error) {
     console.error('Accessibility test error:', error);
