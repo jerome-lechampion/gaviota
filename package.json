@@ -22,6 +22,9 @@
   "author": "Jérôme Le Champion",
   "license": "UNLICENSED",
   "private": true,
+  "overrides": {
+    "keyv": "^5.5.5"
+  },
   "devDependencies": {
     "@playwright/test": "^1.48.0",
     "@axe-core/playwright": "^4.10.0",
