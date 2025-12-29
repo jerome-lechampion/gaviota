@@ -23,13 +23,13 @@ test.describe('Navigation Functionality', () => {
     const servicesLink = page.locator('.site-nav a[href="#services"]');
     await servicesLink.click();
 
-    // Wait for scroll and check URL hash
-    await page.waitForTimeout(500);
+    // Wait for URL to change to include hash
+    await page.waitForURL('**/#services', { timeout: 5000 });
     expect(page.url()).toContain('#services');
 
-    // Check if section is in viewport
+    // Check if section is in viewport with more time for scroll animation
     const servicesSection = page.locator('#services');
-    await expect(servicesSection).toBeInViewport();
+    await expect(servicesSection).toBeInViewport({ timeout: 5000 });
   });
 
   test('should navigate to contact section and show form', async ({ page }) => {
