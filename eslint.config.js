@@ -1,5 +1,17 @@
 export default [
   {
+    ignores: [
+      "node_modules/",
+      ".git/",
+      ".claude/",
+      "gitdir/",
+      "assets/",
+      "about_me.html",
+      "playwright-report/",
+      "test-results/"
+    ]
+  },
+  {
     files: ["script.js"],
     languageOptions: {
       ecmaVersion: 2022,

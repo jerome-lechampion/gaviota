@@ -10,7 +10,7 @@ const prefersDark = typeof window.matchMedia === 'function'
   ? window.matchMedia('(prefers-color-scheme: dark)')
   : { matches: false };
 const THEME_STORAGE_KEY = 'gaviota-theme';
-let storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+const storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
 let userSetTheme = Boolean(storedTheme);
 
 const applyTheme = (theme) => {
@@ -103,7 +103,7 @@ if (contactForm) {
         formStatus.classList.remove('form-status--error');
         formStatus.classList.add('form-status--success');
       }
-    } catch (error) {
+    } catch (_error) {
       if (formStatus) {
         formStatus.textContent =
           "Une erreur est survenue lors de l'envoi. Merci de réessayer ou d'écrire à contact@gaviota.fr.";
