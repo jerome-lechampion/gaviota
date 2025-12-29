@@ -29,7 +29,7 @@
 :root[data-theme='light'] {
   --color-bg: #f6f8fc;
   --color-surface: rgba(255, 255, 255, 0.9);
-  --color-card: #ffffff;
+  --color-card: #fff;
   --color-primary: #0a84ff;
   --color-secondary: #1cb980;
   --color-accent: #ff5e3a;
@@ -44,7 +44,7 @@
   --color-input-border: rgba(8, 15, 40, 0.18);
   --color-stat-muted: rgba(8, 15, 40, 0.4);
   --color-footer-text: rgba(8, 15, 40, 0.6);
-  --color-input-bg: #ffffff;
+  --color-input-bg: #fff;
   --color-footer-bg: #e9efff;
   --color-testimonial-bg: #f6f8ff;
   --gradient-hero: radial-gradient(circle at top left, #d8e7ff, #f6f8fc 60%);
@@ -56,7 +56,7 @@
 
 body {
   margin: 0;
-  font-family: 'Space Grotesk', 'Inter', system-ui, -apple-system, BlinkMacSystemFont,
+  font-family: 'Space Grotesk', Inter, system-ui, -apple-system, BlinkMacSystemFont,
     'Segoe UI', sans-serif;
   background: var(--color-bg);
   color: var(--color-white);
@@ -475,7 +475,7 @@ h4 {
   width: 64px;
   height: 64px;
   padding: 12px;
-  background: #ffffff;
+  background: #fff;
   border-radius: 999px;
   object-fit: contain;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
@@ -699,7 +699,7 @@ h4 {
   position: absolute;
   inset: 0;
   border-radius: 999px;
-  background: #ffffff;
+  background: #fff;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   transform: translateY(-8px);
   z-index: 0;
@@ -719,11 +719,11 @@ h4 {
 }
 
 :root[data-theme='light'] .solutions__grid {
-  background: linear-gradient(120deg, #eef4ff, #ffffff);
+  background: linear-gradient(120deg, #eef4ff, #fff);
 }
 
 :root[data-theme='light'] .cta__grid {
-  background: linear-gradient(120deg, #f1f6ff, #ffffff);
+  background: linear-gradient(120deg, #f1f6ff, #fff);
 }
 
 .footer__bottom {
@@ -738,7 +738,7 @@ h4 {
   color: var(--color-footer-text);
 }
 
-@media (max-width: 860px) {
+@media (width <= 860px) {
   .site-nav {
     position: absolute;
     top: 72px;
@@ -765,7 +765,7 @@ h4 {
   }
 }
 
-@media (max-width: 640px) {
+@media (width <= 640px) {
   .hero__badge {
     position: static;
     margin-top: 1rem;
