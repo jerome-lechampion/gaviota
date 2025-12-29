@@ -54,15 +54,19 @@ test.describe('Visual and Content Tests', () => {
   test('should display client logos', async ({ page }) => {
     await page.goto('/');
 
-    // Scroll to clients section to ensure logos are in viewport
+    // Scroll to clients section and wait for it to be in viewport
     const clientsSection = page.locator('#clients');
     await clientsSection.scrollIntoViewIfNeeded();
+    await expect(clientsSection).toBeInViewport({ timeout: 5000 });
 
+    // Wait for logos to be loaded
     const logos = page.locator('.logo-row img');
+    await expect(logos.first()).toBeVisible({ timeout: 5000 });
+
     const count = await logos.count();
     expect(count).toBeGreaterThan(5);
 
-    // Check some specific logos are present
+    // Check some specific logos are present and visible
     await expect(page.locator('img[alt="Airbus"]')).toBeVisible({ timeout: 5000 });
     await expect(page.locator('img[alt="Thales"]')).toBeVisible({ timeout: 5000 });
     await expect(page.locator('img[alt="TotalEnergies"]')).toBeVisible({ timeout: 5000 });
