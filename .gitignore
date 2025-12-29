@@ -1,1 +1,28 @@
 gitdir
+
+# Node modules
+node_modules/
+
+# Test artifacts
+playwright-report/
+test-results/
+.playwright/
+
+# Lighthouse reports
+lighthouse-report.html
+lighthouse-report.json
+
+# npm/yarn
+package-lock.json
+yarn.lock
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo

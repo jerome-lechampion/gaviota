@@ -1,0 +1,18 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "selector-class-pattern": null,
+    "custom-property-pattern": null,
+    "alpha-value-notation": "number",
+    "color-function-notation": "legacy",
+    "selector-id-pattern": null,
+    "font-family-name-quotes": "always-where-recommended",
+    "function-url-quotes": "always",
+    "import-notation": "string",
+    "media-feature-range-notation": "context",
+    "selector-not-notation": "simple",
+    "no-descending-specificity": null,
+    "declaration-block-no-redundant-longhand-properties": null,
+    "declaration-empty-line-before": null
+  }
+}

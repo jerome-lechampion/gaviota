@@ -1,0 +1,36 @@
+{
+  "name": "gaviota-website",
+  "version": "2.0.0",
+  "description": "Gaviota agency static website",
+  "type": "module",
+  "scripts": {
+    "test": "npm run test:e2e && npm run test:html && npm run test:a11y && npm run test:lighthouse",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:debug": "playwright test --debug",
+    "test:html": "html-validate '*.html'",
+    "test:a11y": "node tests/accessibility.test.js",
+    "test:lighthouse": "node tests/lighthouse.test.js",
+    "lint": "npm run lint:js && npm run lint:css",
+    "lint:js": "eslint script.js",
+    "lint:css": "stylelint 'styles.css'",
+    "lint:fix": "eslint script.js --fix && stylelint 'styles.css' --fix",
+    "serve": "npx http-server -p 8080 -c-1",
+    "ci": "npm run lint && npm run test"
+  },
+  "keywords": ["static-site", "vanilla-js"],
+  "author": "Jérôme Le Champion",
+  "license": "UNLICENSED",
+  "private": true,
+  "devDependencies": {
+    "@playwright/test": "^1.48.0",
+    "@axe-core/playwright": "^4.10.0",
+    "eslint": "^9.17.0",
+    "stylelint": "^16.12.0",
+    "stylelint-config-standard": "^36.0.1",
+    "html-validate": "^8.24.1",
+    "lighthouse": "^12.2.1",
+    "chrome-launcher": "^1.1.2",
+    "http-server": "^14.1.1"
+  }
+}
