@@ -54,10 +54,10 @@ test.describe('Visual and Content Tests', () => {
   test('should display client logos', async ({ page }) => {
     await page.goto('/');
 
-    // Scroll to clients section and wait for it to be in viewport
-    const clientsSection = page.locator('#clients');
-    await clientsSection.scrollIntoViewIfNeeded();
-    await expect(clientsSection).toBeInViewport({ timeout: 5000 });
+    // Scroll to logo-row section (not #clients which is further down)
+    const logoRow = page.locator('.logo-row');
+    await logoRow.scrollIntoViewIfNeeded();
+    await expect(logoRow).toBeInViewport({ timeout: 5000 });
 
     // Wait for logos to be loaded
     const logos = page.locator('.logo-row img');
