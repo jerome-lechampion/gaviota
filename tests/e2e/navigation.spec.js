@@ -43,6 +43,14 @@ test.describe('Navigation Functionality', () => {
   test('should navigate to contact section and show form', async ({ page }) => {
     await page.goto('/');
 
+    // Open mobile menu if nav toggle is visible (mobile view)
+    const navToggle = page.locator('.nav-toggle');
+    if (await navToggle.isVisible()) {
+      await navToggle.click();
+      // Wait for menu to open
+      await page.waitForTimeout(300);
+    }
+
     const contactLink = page.locator('.site-nav a[href="#contact"]');
     await contactLink.click();
 
