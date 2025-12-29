@@ -60,16 +60,16 @@ test.describe('Visual and Content Tests', () => {
     await expect(logoRow).toBeInViewport({ timeout: 5000 });
 
     // Wait for logos to be loaded
-    const logos = page.locator('.logo-row img');
+    const logos = logoRow.locator('img');
     await expect(logos.first()).toBeVisible({ timeout: 5000 });
 
     const count = await logos.count();
     expect(count).toBeGreaterThan(5);
 
-    // Check some specific logos are present and visible
-    await expect(page.locator('img[alt="Airbus"]')).toBeVisible({ timeout: 5000 });
-    await expect(page.locator('img[alt="Thales"]')).toBeVisible({ timeout: 5000 });
-    await expect(page.locator('img[alt="TotalEnergies"]')).toBeVisible({ timeout: 5000 });
+    // Check some specific logos are present and visible (scoped to logo-row)
+    await expect(logoRow.locator('img[alt="Airbus"]')).toBeVisible({ timeout: 5000 });
+    await expect(logoRow.locator('img[alt="Thales"]')).toBeVisible({ timeout: 5000 });
+    await expect(logoRow.locator('img[alt="TotalEnergies"]')).toBeVisible({ timeout: 5000 });
   });
 
   test('should display case studies', async ({ page }) => {

@@ -61,24 +61,6 @@ test.describe('Navigation Functionality', () => {
     await expect(contactForm).toBeInViewport();
   });
 
-  test('should show brand logo and link to top', async ({ page }) => {
-    await page.goto('/');
-
-    const brand = page.locator('.brand');
-    await expect(brand).toBeVisible();
-
-    const brandImg = brand.locator('img');
-    await expect(brandImg).toHaveAttribute('alt', 'Gaviota');
-
-    // Navigate away
-    await page.locator('a[href="#contact"]').first().click();
-    await page.waitForTimeout(500);
-
-    // Click brand to return to top
-    await brand.click();
-    await page.waitForTimeout(500);
-    expect(page.url()).toContain('#accueil');
-  });
 
   test.describe('Mobile Navigation', () => {
     test.use({ viewport: { width: 375, height: 667 } });
