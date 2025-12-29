@@ -43,7 +43,7 @@ export default [
       "no-implied-eval": "error",
       "no-multi-spaces": "error",
       "no-new-func": "error",
-      "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+      "no-unused-vars": ["error", { "argsIgnorePattern": "^_", "caughtErrorsIgnorePattern": "^_" }],
       "no-var": "error",
       "prefer-const": "error",
       "prefer-arrow-callback": "warn",
