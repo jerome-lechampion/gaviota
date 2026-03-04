@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "lib": ["dom", "esnext"],
+    "module": "commonjs",
+    "target": "es2017",
+    "strict": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "jsx": "react"
+  },
+  "include": ["src/**/*.tsx", "src/**/*.ts", "remotion.config.ts"]
+}

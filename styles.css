@@ -304,6 +304,17 @@ h4 {
   border-radius: 12px;
 }
 
+.hero__video-wrap {
+  margin-top: 3rem;
+}
+
+.hero__video {
+  width: 100%;
+  border-radius: var(--radius-lg);
+  display: block;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
+}
+
 .client-strip {
   margin-top: 3rem;
   padding: 1.25rem 1.5rem;

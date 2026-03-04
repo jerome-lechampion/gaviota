@@ -1,0 +1,22 @@
+{
+  "name": "gaviota-video",
+  "version": "1.0.0",
+  "description": "Motion design video for Gaviota agency — built with Remotion",
+  "scripts": {
+    "studio": "remotion studio",
+    "render": "remotion render src/index.ts GaviotaVideo out/gaviota.mp4 --codec h264",
+    "render:720p": "remotion render src/index.ts GaviotaVideo out/gaviota-720p.mp4 --codec h264 --height 720"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.0",
+    "@remotion/google-fonts": "^4.0.0",
+    "remotion": "^4.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "typescript": "^5.0.0"
+  }
+}

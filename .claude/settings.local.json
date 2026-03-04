@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git config:*)",
+      "Bash(git remote add:*)",
+      "Bash(git push:*)",
+      "Bash(ls:*)",
+      "Bash(git remote remove:*)",
+      "Bash(git checkout:*)",
+      "Bash(file:*)",
+      "Bash(xargs ls:*)",
+      "Bash(cat:*)",
+      "Bash(git -C /Users/jerome/prog/web/gaviota2 remote -v)",
+      "Bash(git -C /Users/jerome/prog/web/gaviota2 branch -a)",
+      "Bash(npm install)",
+      "Bash(npx playwright install)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(npm:*)",
+      "Bash(node --version)",
+      "Bash(curl:*)",
+      "Bash(git rm:*)",
+      "Bash(git check-ignore:*)"
+    ]
+  }
+}
