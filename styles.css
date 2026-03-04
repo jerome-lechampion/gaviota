@@ -310,6 +310,8 @@ h4 {
 
 .hero__video {
   width: 100%;
+  max-width: 100%;
+  height: auto;
   border-radius: var(--radius-lg);
   display: block;
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
