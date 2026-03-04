@@ -8,7 +8,8 @@
     "no-raw-characters": "off",
     "tel-non-breaking": "off",
     "attribute-boolean-style": "off",
-    "prefer-button": "off"
+    "prefer-button": "off",
+    "no-autoplay": "off"
   },
   "elements": [
     "html5"
