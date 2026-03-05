@@ -1,8 +1,6 @@
 /**
  * Scene 04 — Agility Sequence (10s = 300 frames)
- *
- * Each card slides in from right, puis le contenu s'anime en cascade :
- *   numéro → titre (overflow-clip slide-up) → body (fade-up) → tags (stagger slide-left)
+ * Cards pop in scale 3→1, content cascades with energy.
  */
 import React from 'react';
 import {
@@ -17,10 +15,10 @@ import {
 import {fontFamily} from '../lib/fonts';
 import {useSceneOpacity} from '../lib/transitions';
 
-const BG = '#ffffff';
 const TEXT = '#0a0a0a';
 const ACCENT = '#00C896';
 const GRAY = '#71717a';
+const BORDER = 'rgba(0,0,0,0.08)';
 
 const STEPS = [
   {
@@ -39,7 +37,7 @@ const STEPS = [
     number: '03',
     title: 'RUN &\nACCÉLÉRATION',
     body: "Monitoring 24/7, coaching des équipes internes et plan d'évolution aligné sur vos ambitions de croissance.",
-    tags: ['Support 24/7', 'Coaching équipes', 'Roadmap produit'],
+    tags: ['Monitoring 24/7', 'Coaching équipes', 'Roadmap produit'],
   },
 ];
 
@@ -50,35 +48,39 @@ const StepCard: React.FC<{
 }> = ({step, index, activationFrame}) => {
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
-  const lf = frame - activationFrame; // local frame depuis l'activation de la carte
+  const lf = frame - activationFrame;
 
-  // — Carte : slide depuis la droite —
-  const cardX = spring({
-    frame: lf,
+  // Card pops in: scale 3→1 + slide from right
+  const cardScale = spring({
+    frame: Math.max(0, lf),
     fps,
-    config: {damping: 120, stiffness: 55, mass: 0.9},
-    from: 100,
-    to: 0,
+    config: {damping: 16, stiffness: 300, mass: 0.4},
+    from: 3,
+    to: 1,
+  });
+  const cardOpacity = interpolate(lf, [0, 10], [0, 1], {
+    extrapolateRight: 'clamp',
+    easing: Easing.out(Easing.quad),
   });
 
-  // — Numéro fantôme : fade immédiat —
+  // Number ghost — immediate
   const numberOpacity = interpolate(lf, [0, 18], [0, 1], {
     extrapolateRight: 'clamp',
   });
 
-  // — Titre : slide-up depuis overflow caché, délai 10f —
-  const titleY = spring({
-    frame: Math.max(0, lf - 10),
+  // Title pops in
+  const titleScale = spring({
+    frame: Math.max(0, lf - 12),
     fps,
-    config: {damping: 220, stiffness: 90, mass: 0.6},
-    from: 48,
-    to: 0,
+    config: {damping: 18, stiffness: 280, mass: 0.4},
+    from: 2.5,
+    to: 1,
   });
-  const titleOpacity = interpolate(lf, [10, 28], [0, 1], {
+  const titleOpacity = interpolate(lf, [12, 26], [0, 1], {
     extrapolateRight: 'clamp',
   });
 
-  // — Body : fade-up, délai 28f après activation —
+  // Body fade up
   const bodyY = spring({
     frame: Math.max(0, lf - 28),
     fps,
@@ -90,7 +92,7 @@ const StepCard: React.FC<{
     extrapolateRight: 'clamp',
   });
 
-  // — Tags : stagger slide depuis la gauche, à partir de 44f —
+  // Tags stagger pop-in
   const TAG_STAGGER = 14;
   const TAG_START = 44;
 
@@ -103,28 +105,31 @@ const StepCard: React.FC<{
         display: 'flex',
         flexDirection: 'column',
         padding: '36px 44px',
-        borderLeft: `2px solid ${isFirst ? ACCENT : 'rgba(0,0,0,0.08)'}`,
-        transform: `translateX(${cardX}px)`,
-        // pas d'opacity sur le container → chaque enfant gère le sien
+        borderLeft: `2px solid ${isFirst ? ACCENT : BORDER}`,
+        transform: `scale(${cardScale})`,
+        opacity: cardOpacity,
+        transformOrigin: 'center center',
+        boxShadow: 'none',
       }}
     >
-      {/* Numéro fantôme */}
+      {/* Ghost number */}
       <div
         style={{
           fontFamily,
           fontSize: 88,
           fontWeight: 700,
           color: ACCENT,
-          opacity: numberOpacity * 0.15,
+          opacity: numberOpacity * 0.2,
           lineHeight: 1,
           marginBottom: -16,
           fontVariantNumeric: 'tabular-nums',
+          textShadow: 'none',
         }}
       >
         {step.number}
       </div>
 
-      {/* Titre — slide-up depuis overflow caché */}
+      {/* Title — pop-in */}
       <div style={{overflow: 'hidden', marginBottom: 22}}>
         <div
           style={{
@@ -136,7 +141,8 @@ const StepCard: React.FC<{
             lineHeight: 1.1,
             whiteSpace: 'pre-line',
             opacity: titleOpacity,
-            transform: `translateY(${titleY}px)`,
+            transform: `scale(${titleScale})`,
+            transformOrigin: 'left center',
           }}
         >
           {step.title}
@@ -160,18 +166,18 @@ const StepCard: React.FC<{
         {step.body}
       </div>
 
-      {/* Tags — stagger slide depuis la gauche, taille augmentée */}
+      {/* Tags — stagger pop */}
       <div style={{display: 'flex', flexDirection: 'column', gap: 12}}>
         {step.tags.map((tag, ti) => {
           const tagStart = TAG_START + ti * TAG_STAGGER;
-          const tagX = spring({
+          const tagScale = spring({
             frame: Math.max(0, lf - tagStart),
             fps,
-            config: {damping: 220, stiffness: 90},
-            from: -28,
-            to: 0,
+            config: {damping: 18, stiffness: 300, mass: 0.4},
+            from: 2.5,
+            to: 1,
           });
-          const tagOpacity = interpolate(lf, [tagStart, tagStart + 14], [0, 1], {
+          const tagOpacity = interpolate(lf, [tagStart, tagStart + 12], [0, 1], {
             extrapolateRight: 'clamp',
           });
 
@@ -185,10 +191,12 @@ const StepCard: React.FC<{
                 color: ACCENT,
                 letterSpacing: '0.06em',
                 opacity: tagOpacity,
-                transform: `translateX(${tagX}px)`,
+                transform: `scale(${tagScale})`,
+                transformOrigin: 'left center',
                 display: 'flex',
                 alignItems: 'center',
                 gap: 8,
+                textShadow: 'none',
               }}
             >
               <span style={{fontSize: 14, opacity: 0.7}}>→</span>
@@ -203,20 +211,27 @@ const StepCard: React.FC<{
 
 export const AgilitySequence: React.FC = () => {
   const frame = useCurrentFrame();
+  const {fps} = useVideoConfig();
   const sceneOpacity = useSceneOpacity(10, 15);
 
-  const headerOpacity = interpolate(frame, [0, 22], [0, 1], {
-    extrapolateRight: 'clamp',
+  // Header — word by word pop-in
+  const HEADER_WORDS = ['Nous', 'cadrons,', 'construisons', 'et', 'faisons', 'grandir', 'vos', 'produits.'];
+  const ACCENT_HEADER = new Set(['grandir']);
+
+  const eyebrowScale = spring({
+    frame,
+    fps,
+    config: {damping: 20, stiffness: 260, mass: 0.4},
+    from: 2.5,
+    to: 1,
   });
-  const headerY = interpolate(frame, [0, 22], [32, 0], {
+  const eyebrowOpacity = interpolate(frame, [0, 14], [0, 1], {
     extrapolateRight: 'clamp',
-    easing: Easing.bezier(0.16, 1, 0.3, 1),
   });
 
   return (
     <AbsoluteFill
       style={{
-        backgroundColor: BG,
         padding: '80px 120px',
         display: 'flex',
         flexDirection: 'column',
@@ -224,13 +239,7 @@ export const AgilitySequence: React.FC = () => {
       }}
     >
       {/* Header */}
-      <div
-        style={{
-          marginBottom: 56,
-          opacity: headerOpacity,
-          transform: `translateY(${headerY}px)`,
-        }}
-      >
+      <div style={{marginBottom: 56}}>
         <div
           style={{
             fontFamily,
@@ -239,10 +248,16 @@ export const AgilitySequence: React.FC = () => {
             color: ACCENT,
             letterSpacing: '0.38em',
             marginBottom: 12,
+            opacity: eyebrowOpacity,
+            transform: `scale(${eyebrowScale})`,
+            transformOrigin: 'left center',
+            textShadow: 'none',
           }}
         >
           MÉTHODE ÉPROUVÉE
         </div>
+
+        {/* Word-by-word pop-in headline */}
         <div
           style={{
             fontFamily,
@@ -251,10 +266,39 @@ export const AgilitySequence: React.FC = () => {
             color: TEXT,
             letterSpacing: '-0.03em',
             lineHeight: 1.1,
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '0 12px',
           }}
         >
-          Nous cadrons, construisons et faisons{' '}
-          <span style={{color: ACCENT}}>grandir</span> vos produits.
+          {HEADER_WORDS.map((word, i) => {
+            const delay = 8 + i * 6;
+            const wScale = spring({
+              frame: Math.max(0, frame - delay),
+              fps,
+              config: {damping: 16, stiffness: 300, mass: 0.4},
+              from: 3,
+              to: 1,
+            });
+            const wOpacity = interpolate(frame, [delay, delay + 10], [0, 1], {
+              extrapolateRight: 'clamp',
+            });
+            return (
+              <span
+                key={word + i}
+                style={{
+                  display: 'inline-block',
+                  color: ACCENT_HEADER.has(word) ? ACCENT : TEXT,
+                  transform: `scale(${wScale})`,
+                  opacity: wOpacity,
+                  transformOrigin: 'center bottom',
+                  textShadow: 'none',
+                }}
+              >
+                {word}
+              </span>
+            );
+          })}
         </div>
       </div>
 

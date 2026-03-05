@@ -15,7 +15,6 @@ import {
 import {fontFamily} from '../lib/fonts';
 import {useSceneOpacity} from '../lib/transitions';
 
-const BG = '#ffffff';
 const TEXT = '#0a0a0a';
 const ACCENT = '#00C896';
 
@@ -31,19 +30,28 @@ const CLIENTS = [
   },
 ];
 
+// Words of title for staggered pop-in
+const TITLE_WORDS = ['Programmes', 'spatiaux.', 'Ferroviaire.', 'IoT.'];
+const ACCENT_WORDS = new Set(['Ferroviaire.']);
+
 export const ClientsParade: React.FC = () => {
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
   const sceneOpacity = useSceneOpacity(10, 15);
 
-  const titleOpacity = interpolate(frame, [0, 25], [0, 1], {
-    extrapolateRight: 'clamp',
+  // Eyebrow pop-in
+  const eyebrowScale = spring({
+    frame,
+    fps,
+    config: {damping: 18, stiffness: 280, mass: 0.4},
+    from: 2.5,
+    to: 1,
   });
-  const titleY = interpolate(frame, [0, 25], [40, 0], {
+  const eyebrowOpacity = interpolate(frame, [0, 14], [0, 1], {
     extrapolateRight: 'clamp',
-    easing: Easing.bezier(0.16, 1, 0.3, 1),
   });
 
+  // Decorative bottom line
   const lineWidth = interpolate(frame, [120, 185], [0, 680], {
     extrapolateRight: 'clamp',
     easing: Easing.bezier(0.16, 1, 0.3, 1),
@@ -52,7 +60,6 @@ export const ClientsParade: React.FC = () => {
   return (
     <AbsoluteFill
       style={{
-        backgroundColor: BG,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -69,14 +76,15 @@ export const ClientsParade: React.FC = () => {
           color: ACCENT,
           letterSpacing: '0.38em',
           marginBottom: 14,
-          opacity: titleOpacity,
-          transform: `translateY(${titleY}px)`,
+          opacity: eyebrowOpacity,
+          transform: `scale(${eyebrowScale})`,
+          textShadow: 'none',
         }}
       >
         ILS NOUS CONFIENT LEURS PRODUITS CRITIQUES
       </div>
 
-      {/* Title */}
+      {/* Title — word by word pop-in */}
       <div
         style={{
           fontFamily,
@@ -85,16 +93,44 @@ export const ClientsParade: React.FC = () => {
           color: TEXT,
           letterSpacing: '-0.03em',
           marginBottom: 72,
-          opacity: titleOpacity,
-          transform: `translateY(${titleY}px)`,
           textAlign: 'center',
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+          gap: '0 14px',
         }}
       >
-        Programmes spatiaux.{' '}
-        <span style={{color: ACCENT}}>Ferroviaire.</span> IoT.
+        {TITLE_WORDS.map((word, i) => {
+          const delay = 10 + i * 8;
+          const wordScale = spring({
+            frame: Math.max(0, frame - delay),
+            fps,
+            config: {damping: 16, stiffness: 300, mass: 0.4},
+            from: 3,
+            to: 1,
+          });
+          const wordOpacity = interpolate(frame, [delay, delay + 10], [0, 1], {
+            extrapolateRight: 'clamp',
+          });
+          return (
+            <span
+              key={word}
+              style={{
+                display: 'inline-block',
+                color: ACCENT_WORDS.has(word) ? ACCENT : TEXT,
+                transform: `scale(${wordScale})`,
+                opacity: wordOpacity,
+                transformOrigin: 'center bottom',
+                textShadow: 'none',
+              }}
+            >
+              {word}
+            </span>
+          );
+        })}
       </div>
 
-      {/* Logo grid — brightness(0) renders logos black on white bg */}
+      {/* Logo grid — white on dark bg */}
       <div
         style={{
           display: 'flex',
@@ -106,17 +142,17 @@ export const ClientsParade: React.FC = () => {
         }}
       >
         {CLIENTS.map((client, i) => {
-          const staggerStart = 30 + i * 20;
-          const logoY = spring({
-            frame: frame - staggerStart,
+          const staggerStart = 35 + i * 18;
+          const logoScale = spring({
+            frame: Math.max(0, frame - staggerStart),
             fps,
-            config: {damping: 180, stiffness: 70},
-            from: 40,
-            to: 0,
+            config: {damping: 16, stiffness: 280, mass: 0.45},
+            from: 2.8,
+            to: 1,
           });
           const logoOpacity = interpolate(
             frame,
-            [staggerStart, staggerStart + 22],
+            [staggerStart, staggerStart + 16],
             [0, 1],
             {extrapolateRight: 'clamp'},
           );
@@ -131,7 +167,7 @@ export const ClientsParade: React.FC = () => {
                 width: 180,
                 height: 70,
                 opacity: logoOpacity,
-                transform: `translateY(${logoY}px)`,
+                transform: `scale(${logoScale})`,
               }}
             >
               <Img
@@ -140,7 +176,6 @@ export const ClientsParade: React.FC = () => {
                   maxWidth: 160,
                   maxHeight: 56,
                   objectFit: 'contain',
-                  // brightness(0) → black logos, readable on white bg
                   filter: 'brightness(0)',
                   opacity: 0.75,
                 }}
@@ -150,14 +185,14 @@ export const ClientsParade: React.FC = () => {
         })}
       </div>
 
-      {/* Decorative bottom line */}
+      {/* Glowing bottom line */}
       <div
         style={{
           marginTop: 72,
           width: lineWidth,
           height: 1,
-          backgroundColor: ACCENT,
-          opacity: 0.5,
+          background: `linear-gradient(to right, transparent, ${ACCENT}, transparent)`,
+          boxShadow: `0 0 10px rgba(0,200,150,0.5)`,
         }}
       />
     </AbsoluteFill>

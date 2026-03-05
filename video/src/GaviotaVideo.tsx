@@ -1,6 +1,7 @@
 import React from 'react';
 import {AbsoluteFill, Sequence} from 'remotion';
 
+import {DynamicBackground} from './lib/DynamicBackground';
 import {AgilitySequence} from './scenes/AgilitySequence';
 import {CTAFinal} from './scenes/CTAFinal';
 import {ClientsParade} from './scenes/ClientsParade';
@@ -12,7 +13,7 @@ import {Testimonials} from './scenes/Testimonials';
 // Helper: seconds → frames at 30fps
 const s = (sec: number) => Math.round(sec * 30);
 
-// Timeline (50s total — CaseStudies removed):
+// Timeline (50s total):
 // 00:00–00:03  LogoReveal        (3s  = 90f)
 // 00:03–00:08  KineticStats      (5s  = 150f)
 // 00:08–00:15  ClientsParade     (7s  = 210f)
@@ -24,7 +25,10 @@ const s = (sec: number) => Math.round(sec * 30);
 
 export const GaviotaVideo: React.FC = () => {
   return (
-    <AbsoluteFill style={{backgroundColor: '#ffffff'}}>
+    <AbsoluteFill style={{backgroundColor: '#f8f8f6'}}>
+      {/* Global animated background — persists across all scenes */}
+      <DynamicBackground />
+
       <Sequence from={s(0)} durationInFrames={s(3)}>
         <LogoReveal />
       </Sequence>

@@ -1,38 +1,84 @@
 /**
  * Scene 01 — Logo Reveal (3s = 90 frames)
+ * Letters of GAVIOTA each pop in with scale 3→1, staggered.
  */
 import React from 'react';
-import {AbsoluteFill, Easing, interpolate, useCurrentFrame} from 'remotion';
+import {
+  AbsoluteFill,
+  Easing,
+  interpolate,
+  spring,
+  useCurrentFrame,
+  useVideoConfig,
+} from 'remotion';
 
 import {fontFamily} from '../lib/fonts';
 import {useSceneOpacity} from '../lib/transitions';
 
-const BG = '#ffffff';
 const TEXT = '#0a0a0a';
 const ACCENT = '#00C896';
+const LETTERS = 'GAVIOTA'.split('');
+const LETTER_STAGGER = 5; // frames between each letter pop
+
+const PopLetter: React.FC<{char: string; delay: number}> = ({char, delay}) => {
+  const frame = useCurrentFrame();
+  const {fps} = useVideoConfig();
+  const lf = frame - delay;
+
+  const scale = spring({
+    frame: Math.max(0, lf),
+    fps,
+    config: {damping: 14, stiffness: 320, mass: 0.35},
+    from: 3,
+    to: 1,
+  });
+
+  const opacity = interpolate(lf, [0, 10], [0, 1], {
+    extrapolateRight: 'clamp',
+    easing: Easing.out(Easing.quad),
+  });
+
+  return (
+    <span
+      style={{
+        display: 'inline-block',
+        transform: `scale(${scale})`,
+        opacity,
+        transformOrigin: 'center bottom',
+      }}
+    >
+      {char}
+    </span>
+  );
+};
 
 export const LogoReveal: React.FC = () => {
   const frame = useCurrentFrame();
-  const sceneOpacity = useSceneOpacity(8, 10);
+  const {fps} = useVideoConfig();
+  const sceneOpacity = useSceneOpacity(6, 10);
 
-  const lineProgress = interpolate(frame, [0, 35], [0, 100], {
+  // Subtitle pops in after letters
+  const subtitleDelay = LETTERS.length * LETTER_STAGGER + 12;
+  const subtitleScale = spring({
+    frame: Math.max(0, frame - subtitleDelay),
+    fps,
+    config: {damping: 20, stiffness: 280, mass: 0.4},
+    from: 2.5,
+    to: 1,
+  });
+  const subtitleOpacity = interpolate(frame, [subtitleDelay, subtitleDelay + 10], [0, 1], {
     extrapolateRight: 'clamp',
-    easing: Easing.bezier(0.16, 1, 0.3, 1),
   });
 
-  const textClip = interpolate(frame, [5, 40], [0, 100], {
+  // Glowing underline that expands after the word is set
+  const glowWidth = interpolate(frame, [40, 68], [0, 680], {
     extrapolateRight: 'clamp',
     easing: Easing.bezier(0.16, 1, 0.3, 1),
-  });
-
-  const subtitleOpacity = interpolate(frame, [45, 65], [0, 1], {
-    extrapolateRight: 'clamp',
   });
 
   return (
     <AbsoluteFill
       style={{
-        backgroundColor: BG,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -40,36 +86,36 @@ export const LogoReveal: React.FC = () => {
         opacity: sceneOpacity,
       }}
     >
-      {/* Sweeping accent line */}
+      {/* GAVIOTA — letter-by-letter pop-in */}
       <div
         style={{
-          position: 'absolute',
-          left: 0,
-          top: '50%',
-          width: `${lineProgress}%`,
+          display: 'flex',
+          gap: 0,
+          fontFamily,
+          fontSize: 148,
+          fontWeight: 700,
+          color: TEXT,
+          letterSpacing: '-0.04em',
+          lineHeight: 1,
+        }}
+      >
+        {LETTERS.map((char, i) => (
+          <PopLetter key={i} char={char} delay={i * LETTER_STAGGER} />
+        ))}
+      </div>
+
+      {/* Glowing underline */}
+      <div
+        style={{
+          width: glowWidth,
           height: 2,
-          backgroundColor: ACCENT,
-          transform: 'translateY(-80px)',
+          background: `linear-gradient(to right, transparent, ${ACCENT} 20%, ${ACCENT} 80%, transparent)`,
+          boxShadow: `0 0 12px rgba(0,200,150,0.4)`,
+          marginTop: 4,
         }}
       />
 
-      {/* GAVIOTA wordmark */}
-      <div style={{clipPath: `inset(0 ${100 - textClip}% 0 0)`}}>
-        <div
-          style={{
-            fontFamily,
-            fontSize: 148,
-            fontWeight: 700,
-            color: TEXT,
-            letterSpacing: '-0.05em',
-            lineHeight: 1,
-          }}
-        >
-          GAVIOTA
-        </div>
-      </div>
-
-      {/* Tagline */}
+      {/* Tagline pop-in */}
       <div
         style={{
           fontFamily,
@@ -79,9 +125,11 @@ export const LogoReveal: React.FC = () => {
           letterSpacing: '0.45em',
           marginTop: 28,
           opacity: subtitleOpacity,
+          transform: `scale(${subtitleScale})`,
+          textShadow: `0 0 14px rgba(0,200,150,0.35)`,
         }}
       >
-        STUDIO · PARIS
+        STUDIO WEB · PARIS
       </div>
     </AbsoluteFill>
   );

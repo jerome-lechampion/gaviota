@@ -1,6 +1,5 @@
 /**
  * Scene 07 — Outro (5s = 150 frames)
- * Logo 2.5× larger (200px) for strong brand close.
  */
 import React from 'react';
 import {
@@ -14,7 +13,6 @@ import {
 
 import {fontFamily} from '../lib/fonts';
 
-const BG = '#ffffff';
 const TEXT = '#0a0a0a';
 const ACCENT = '#00C896';
 const GRAY = '#71717a';
@@ -23,27 +21,55 @@ export const Outro: React.FC = () => {
   const frame = useCurrentFrame();
   const {fps, durationInFrames} = useVideoConfig();
 
+  // Logo — big pop-in 3→1
   const logoScale = spring({
     frame,
     fps,
-    config: {damping: 180, stiffness: 55},
-    from: 0.75,
+    config: {damping: 14, stiffness: 300, mass: 0.4},
+    from: 3,
     to: 1,
   });
-
-  const logoOpacity = interpolate(frame, [0, 20], [0, 1], {
+  const logoOpacity = interpolate(frame, [0, 12], [0, 1], {
     extrapolateRight: 'clamp',
   });
 
-  const nameOpacity = interpolate(frame, [15, 35], [0, 1], {
+  // Wordmark pop-in
+  const nameScale = spring({
+    frame: Math.max(0, frame - 14),
+    fps,
+    config: {damping: 16, stiffness: 300, mass: 0.4},
+    from: 3,
+    to: 1,
+  });
+  const nameOpacity = interpolate(frame, [14, 26], [0, 1], {
     extrapolateRight: 'clamp',
   });
 
-  const taglineOpacity = interpolate(frame, [32, 52], [0, 1], {
+  // URL pop-in
+  const urlScale = spring({
+    frame: Math.max(0, frame - 28),
+    fps,
+    config: {damping: 18, stiffness: 280, mass: 0.45},
+    from: 2.5,
+    to: 1,
+  });
+  const urlOpacity = interpolate(frame, [28, 42], [0, 1], {
     extrapolateRight: 'clamp',
   });
 
-  // Final fade to white
+  // Tagline
+  const taglineScale = spring({
+    frame: Math.max(0, frame - 40),
+    fps,
+    config: {damping: 20, stiffness: 260, mass: 0.5},
+    from: 2,
+    to: 1,
+  });
+  const taglineOpacity = interpolate(frame, [40, 55], [0, 1], {
+    extrapolateRight: 'clamp',
+  });
+
+  // Final fade to black
   const finalFade = interpolate(
     frame,
     [durationInFrames - 28, durationInFrames],
@@ -54,7 +80,6 @@ export const Outro: React.FC = () => {
   return (
     <AbsoluteFill
       style={{
-        backgroundColor: BG,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -62,12 +87,13 @@ export const Outro: React.FC = () => {
         opacity: finalFade,
       }}
     >
-      {/* Logo mark — 2.5× bigger: 80 → 200px */}
+      {/* Logo — pop 3→1 */}
       <div
         style={{
           opacity: logoOpacity,
           transform: `scale(${logoScale})`,
           marginBottom: 24,
+          filter: 'none',
         }}
       >
         <Img
@@ -86,6 +112,7 @@ export const Outro: React.FC = () => {
           letterSpacing: '-0.04em',
           lineHeight: 1,
           opacity: nameOpacity,
+          transform: `scale(${nameScale})`,
           marginBottom: 10,
         }}
       >
@@ -100,8 +127,10 @@ export const Outro: React.FC = () => {
           fontWeight: 500,
           color: ACCENT,
           letterSpacing: '0.22em',
-          opacity: taglineOpacity,
+          opacity: urlOpacity,
+          transform: `scale(${urlScale})`,
           marginBottom: 10,
+          textShadow: 'none',
         }}
       >
         gaviota.fr
@@ -116,9 +145,10 @@ export const Outro: React.FC = () => {
           color: GRAY,
           letterSpacing: '0.28em',
           opacity: taglineOpacity,
+          transform: `scale(${taglineScale})`,
         }}
       >
-        WEB · MOBILE · CRITIQUE · PARIS
+        WEB · MOBILE · IOT · PARIS
       </div>
     </AbsoluteFill>
   );

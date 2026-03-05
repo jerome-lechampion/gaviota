@@ -13,7 +13,6 @@ import {
 import {fontFamily} from '../lib/fonts';
 import {useSceneOpacity} from '../lib/transitions';
 
-const BG = '#ffffff';
 const TEXT = '#0a0a0a';
 const ACCENT = '#00C896';
 const GRAY = '#71717a';
@@ -23,21 +22,40 @@ const TESTIMONIALS = [
   {
     quote:
       "« Jérôme a su inventer et réaliser l'ensemble des composantes techniques du projet avec inventivité, rigueur et rapidité. »",
+    accentWord: 'inventer',
     author: 'Guillaume Eberwein',
     role: 'PDG de SWAP GPS',
   },
   {
     quote:
       "« Jérôme a su répondre à nos besoins très spécifiques avec une qualité d'exécution irréprochable. »",
+    accentWord: 'qualité',
     author: 'Stéphane Seguin',
-    role: 'Directeur de programme',
+    role: 'Directeur de programme chez TotalEnergies',
   },
   {
     quote: '« Top collaborateur ! En tout point de vue. »',
+    accentWord: 'collaborateur',
     author: 'Marianne Cros',
     role: 'Key Account Manager, Nexton',
   },
 ];
+
+/** Renders a quote string with one word highlighted in accent color */
+const HighlightedQuote: React.FC<{quote: string; accentWord: string; style: React.CSSProperties}> = ({quote, accentWord, style}) => {
+  const parts = quote.split(new RegExp(`(${accentWord})`, 'i'));
+  return (
+    <div style={style}>
+      {parts.map((part, i) =>
+        part.toLowerCase() === accentWord.toLowerCase() ? (
+          <span key={i} style={{color: ACCENT}}>{part}</span>
+        ) : (
+          <span key={i}>{part}</span>
+        )
+      )}
+    </div>
+  );
+};
 
 const TestimonialItem: React.FC<{
   t: (typeof TESTIMONIALS)[0];
@@ -45,31 +63,48 @@ const TestimonialItem: React.FC<{
 }> = ({t, startFrame}) => {
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
-  const localFrame = frame - startFrame;
+  const lf = frame - startFrame;
 
-  if (localFrame < 0 || localFrame >= TESTI_DURATION) return null;
+  if (lf < 0 || lf >= TESTI_DURATION) return null;
 
-  const opacity = interpolate(
-    localFrame,
-    [0, 14, TESTI_DURATION - 14, TESTI_DURATION],
-    [0, 1, 1, 0],
-    {extrapolateRight: 'clamp'},
-  );
-
-  const quoteY = spring({
-    frame: localFrame,
-    fps,
-    config: {damping: 200, stiffness: 75},
-    from: 45,
-    to: 0,
+  const fadeOut = interpolate(lf, [TESTI_DURATION - 14, TESTI_DURATION], [1, 0], {
+    extrapolateRight: 'clamp',
   });
 
-  const authorY = spring({
-    frame: Math.max(0, localFrame - 18),
+  // Quote mark pops in
+  const quoteMarkScale = spring({
+    frame: lf,
     fps,
-    config: {damping: 200, stiffness: 75},
-    from: 22,
-    to: 0,
+    config: {damping: 14, stiffness: 340, mass: 0.35},
+    from: 3,
+    to: 1,
+  });
+  const quoteMarkOpacity = interpolate(lf, [0, 10], [0, 1], {
+    extrapolateRight: 'clamp',
+  });
+
+  // Quote text — scale pop-in
+  const quoteScale = spring({
+    frame: Math.max(0, lf - 8),
+    fps,
+    config: {damping: 18, stiffness: 260, mass: 0.45},
+    from: 2.5,
+    to: 1,
+  });
+  const quoteOpacity = interpolate(lf, [8, 22], [0, 1], {
+    extrapolateRight: 'clamp',
+  });
+
+  // Author slides up + pops in
+  const authorScale = spring({
+    frame: Math.max(0, lf - 22),
+    fps,
+    config: {damping: 20, stiffness: 240, mass: 0.5},
+    from: 2,
+    to: 1,
+  });
+  const authorOpacity = interpolate(lf, [22, 36], [0, 1], {
+    extrapolateRight: 'clamp',
   });
 
   return (
@@ -80,7 +115,7 @@ const TestimonialItem: React.FC<{
         alignItems: 'center',
         justifyContent: 'center',
         padding: '0 220px',
-        opacity,
+        opacity: fadeOut,
       }}
     >
       {/* Opening quote mark */}
@@ -90,17 +125,22 @@ const TestimonialItem: React.FC<{
           fontSize: 130,
           fontWeight: 700,
           color: ACCENT,
-          opacity: 0.2,
+          opacity: quoteMarkOpacity * 0.35,
           lineHeight: 0.5,
           marginBottom: 36,
           alignSelf: 'flex-start',
+          transform: `scale(${quoteMarkScale})`,
+          transformOrigin: 'left center',
+          textShadow: 'none',
         }}
       >
         "
       </div>
 
-      {/* Quote */}
-      <div
+      {/* Quote — pop-in scale */}
+      <HighlightedQuote
+        quote={t.quote}
+        accentWord={t.accentWord}
         style={{
           fontFamily,
           fontSize: 36,
@@ -109,10 +149,22 @@ const TestimonialItem: React.FC<{
           lineHeight: 1.45,
           letterSpacing: '-0.02em',
           textAlign: 'center',
-          transform: `translateY(${quoteY}px)`,
+          transform: `scale(${quoteScale})`,
+          opacity: quoteOpacity,
+        }}
+      />
+
+      {/* Stars */}
+      <div
+        style={{
+          marginTop: 32,
+          fontSize: 28,
+          letterSpacing: '4px',
+          transform: `scale(${authorScale})`,
+          opacity: authorOpacity,
         }}
       >
-        {t.quote}
+        ⭐️⭐️⭐️⭐️⭐️
       </div>
 
       {/* Author */}
@@ -123,15 +175,17 @@ const TestimonialItem: React.FC<{
           flexDirection: 'column',
           alignItems: 'center',
           gap: 6,
-          transform: `translateY(${authorY}px)`,
+          transform: `scale(${authorScale})`,
+          opacity: authorOpacity,
         }}
       >
         <div
           style={{
             width: 40,
             height: 2,
-            backgroundColor: ACCENT,
+            background: `linear-gradient(to right, transparent, ${ACCENT}, transparent)`,
             marginBottom: 14,
+            boxShadow: 'none',
           }}
         />
         <div
@@ -163,15 +217,23 @@ const TestimonialItem: React.FC<{
 
 export const Testimonials: React.FC = () => {
   const frame = useCurrentFrame();
+  const {fps} = useVideoConfig();
   const sceneOpacity = useSceneOpacity(10, 15);
 
-  const badgeOpacity = interpolate(frame, [0, 28], [0, 1], {
+  const badgeScale = spring({
+    frame,
+    fps,
+    config: {damping: 16, stiffness: 300, mass: 0.4},
+    from: 3,
+    to: 1,
+  });
+  const badgeOpacity = interpolate(frame, [0, 14], [0, 1], {
     extrapolateRight: 'clamp',
   });
 
   return (
-    <AbsoluteFill style={{backgroundColor: BG, opacity: sceneOpacity}}>
-      {/* Persistent score badge */}
+    <AbsoluteFill style={{opacity: sceneOpacity}}>
+      {/* Score badge — pop-in */}
       <div
         style={{
           position: 'absolute',
@@ -181,6 +243,8 @@ export const Testimonials: React.FC = () => {
           flexDirection: 'column',
           alignItems: 'flex-end',
           opacity: badgeOpacity,
+          transform: `scale(${badgeScale})`,
+          transformOrigin: 'right top',
         }}
       >
         <div
@@ -191,6 +255,7 @@ export const Testimonials: React.FC = () => {
             color: ACCENT,
             letterSpacing: '-0.04em',
             lineHeight: 1,
+            textShadow: 'none',
           }}
         >
           4.9/5
