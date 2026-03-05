@@ -7,7 +7,7 @@ export const RemotionRoot: React.FC = () => {
     <Composition
       id="GaviotaVideo"
       component={GaviotaVideo}
-      durationInFrames={1500} // 50s × 30fps (CaseStudies removed)
+      durationInFrames={1570} // 52.33s × 30fps
       fps={30}
       width={1920}
       height={1080}

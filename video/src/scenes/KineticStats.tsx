@@ -23,7 +23,6 @@ const STAT_DURATION = 50;
 const STATS = [
   {number: '20+', label: 'PLATEFORMES & APPS LANCÉES', sub: 'depuis 2018'},
   {number: '99%', label: 'SATISFACTION CLIENT', sub: 'comités projets grands comptes'},
-  {number: '45j', label: "DE L'IDÉE AU MVP", sub: 'delivery cadencé, zéro bullshit'},
 ];
 
 const StatItem: React.FC<{
